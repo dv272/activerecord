@@ -34,12 +34,12 @@
 		
 		echo '<h2>Insert/Update New Record</h2>';
 		$td = new todo();
-		$td->id = '';
+		$td->id = 8;
 		$td->owneremail = 'mjlee@njit.edu';
 		$td->ownerid = 1;
 		$td->createddate = '2017-11-15 12:34:45';
 		$td->duedate = '2017-11-25 12:34:45';
-		$td->message = 'Demo task 1';
+		$td->message = 'Demo task Updated';
 		$td->isdone = 0;
 		$td->save();
 		echo '<p>Todo Record data: Title = '.$td->message.', Status = '.$td->isdone.'</p>';
