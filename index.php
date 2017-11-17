@@ -55,6 +55,22 @@
 		}
 		echo '</table><br><hr>';
 		
+		echo '<h2>Delete Existing Record</h2>';
+		$td->delete();
+		echo '<p>Deleted Record data id: '.$td->id.'</p>';
+		echo "<table>";
+		$recordAll = todos::findAll();
+		if (count($recordAll) > 0) {
+			echo "<tr><th>ToDo ID</th><th>Owner Email</th><th>Owner ID</th><th>Create Date
+			</th><th>Due Date</th><th>Message</th><th>Is Done?</th></tr>";
+			foreach ($recordAll as $row) {
+				echo "<tr><td>".$row->id."</td><td>".$row->owneremail."</td><td>".$row->ownerid."</td><td>".$row->createddate."</td>
+				<td>".$row->duedate."</td><td>".$row->message."</td><td>".$row->isdone."</td></tr>";
+			}
+		}
+		echo '</table><br><hr>';
+	
+
 	?>
 </body>
 </html>
