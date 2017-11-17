@@ -34,7 +34,7 @@
 		
 		echo '<h2>Insert/Update New Record</h2>';
 		$td = new todo();
-		$td->id = 8;
+		$td->id = '';
 		$td->owneremail = 'mjlee@njit.edu';
 		$td->ownerid = 1;
 		$td->createddate = '2017-11-15 12:34:45';
