@@ -86,27 +86,37 @@ class model {
         
         if ($this->id == '') {
             $sql = $this->insert($columnString, $valueString);
-            echo '<h1>In insert</h1>';
+            //echo '<h1>In insert</h1>';
         } else {
             $sql = $this->update();
         }
         
         $db = dbConn::getConnection();
         $statement = $db->prepare($sql);
-        $statement->execute(array('owneremail'=>$this->owneremail,
+        
+        if(get_called_class() == 'todo') {
+        	$statement->execute(array('owneremail'=>$this->owneremail,
             				'ownerid'=>$this->ownerid, 'createddate'=>$this->createddate,
             				'duedate'=>$this->duedate, 'message'=>$this->message, 
             				'isdone'=>$this->isdone));
+        }else {
+        	$statement->execute(array('email'=>$this->email,
+            				'fname'=>$this->fname, 'lname'=>$this->lname,
+            				'phone'=>$this->phone, 'birthday'=>$this->birthday, 
+            				'gender'=>$this->gender, 'password'=>$this->password));
+        }
+        
         //echo "INSERT INTO ".$this->tableName." (" . $columnString . ") VALUES (" . $valueString . ")</br>";
         echo 'I just saved record with id: ' . $this->id .'<br>';
     }
     private function insert($columnString, $valueString) {
         $sql = "INSERT INTO ".$this->tableName." (" . $columnString . ") VALUES (" . $valueString . ")";
-        echo $sql;
+        //echo $sql;
         return $sql;
     }
     private function update() {
-        $sql = 'UPDATE '.$this->tableName.' 
+    	if(get_called_class() == 'todo') {
+        	$sql = 'UPDATE '.$this->tableName.' 
         		SET owneremail=:owneremail,
         			ownerid=:ownerid,
         			createddate=:createddate,
@@ -114,7 +124,17 @@ class model {
         			message=:message,
         			isdone=:isdone
         		WHERE id='.$this->id;
-        			
+        }else {
+        	$sql = 'UPDATE '.$this->tableName.' 
+        		SET email=:email,
+        			fname=:fname,
+        			lname=:lname,
+        			phone=:phone,
+        			birthday=:birthday,
+        			gender=:gender,
+        			password=:password
+        		WHERE id='.$this->id;
+        }
         echo 'I just updated record with id: ' . $this->id .'<br>';
         return $sql;
     }
@@ -128,6 +148,19 @@ class model {
 }
 
 class account extends model {
+	public $id;
+    public $email;
+    public $fname;
+    public $lname;
+    public $phone;
+    public $birthday;
+    public $gender;
+    public $password;
+    public function __construct()
+    {
+        $this->tableName = 'accounts';
+	
+    }
 }
 
 class todo extends model {
